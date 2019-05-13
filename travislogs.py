@@ -1,3 +1,5 @@
+#!/usr/bin/python2.7
+
 import sys
 import os
 import json
@@ -58,6 +60,8 @@ def main(owner):
 								f.close()
 		except:
 			print("Something went wrong. Make sure the organization name is correct")
+			
+	print("\033[1mDone\033[0m\n")
 
 if __name__== "__main__":
 	try:
