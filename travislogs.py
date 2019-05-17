@@ -1,15 +1,12 @@
 #!/usr/bin/python2.7
 
-import sys
-import os
-import json
-import requests
+import os, sys, json, requests
 
 # travislogger.py by root4loot (github.com/root4loot/travislogs)
 # Grabs build logs from travis-ci.org and travis-ci.com
 # results are stored to ./org and ./com/
 #
-# Usage: python travislogs.py <organization>
+# Usage: ./travislogs.py <organization>
 
 def req(url):
 	r=requests.get(url, headers={'Travis-API-Version': '3'})
@@ -17,6 +14,8 @@ def req(url):
 
 def main(owner):
 	exts = ['org', 'com']
+
+	print("")
 
 	for eIndex, ext in enumerate(exts):
 		repos = req("https://api.travis-ci."+ext+"/owner/"+owner+"/repos?limit=0")
@@ -33,7 +32,7 @@ def main(owner):
 			for rIndex, repo in enumerate(repos['repositories']):
 				repoID = repo['id']
 				slug = repo['slug']
-				isActive = repo['active']				
+				isActive = repo['active']
 
 				if isActive == True:
 					builds = req("https://api.travis-ci."+ext+"/repo/"+str(repoID)+"/builds?limit=0")
@@ -65,9 +64,8 @@ def main(owner):
 
 if __name__== "__main__":
 	try:
-		owner = sys.argv[1]
-		print("")
-		main(owner)
+		main(str(sys.argv[1]))
+		
 	except:
 		print("\n\033[94mtravislogs.py by root4loot (github.com/root4loot/travislogs)\033[0m")
-		print("\033[1musage: python travislogs.py <organization>\033[0m\n")
+		print("\033[1musage: ./travislogs.py <organization>\033[0m\n")
