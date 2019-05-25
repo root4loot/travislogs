@@ -15,8 +15,6 @@ def req(url):
 def main(owner):
 	exts = ['org', 'com']
 
-	print("")
-
 	for eIndex, ext in enumerate(exts):
 		repos = req("https://api.travis-ci."+ext+"/owner/"+owner+"/repos?limit=0")
 		activeRepos = 0
@@ -46,7 +44,7 @@ def main(owner):
 
 						jobsC = len(build['jobs'])
 						for jIndex, job in enumerate(build['jobs']):
-							sys.stdout.write("Travis Endpoint: ["+str(eIndex+1)+"/"+str(len(exts))+"] Active Repo: ["+str(rIndex+1)+"/"+str(activeRepos)+"] Build: ["+str(bIndex+1)+"/"+str(buildsC)+"] Job: ["+str(jIndex+1)+"/"+str(jobsC)+"]\r")
+							sys.stdout.write("\nTravis Endpoint: ["+str(eIndex+1)+"/"+str(len(exts))+"] Active Repo: ["+str(rIndex+1)+"/"+str(activeRepos)+"] Build: ["+str(bIndex+1)+"/"+str(buildsC)+"] Job: ["+str(jIndex+1)+"/"+str(jobsC)+"]")
 							sys.stdout.flush()
 
 							jobId = job['id']
@@ -58,8 +56,8 @@ def main(owner):
 								f.write(r.content)
 								f.close()
 		except:
-			print("Something went wrong. Make sure the organization name is correct")
-			
+			continue
+
 	print("\033[1mDone\033[0m\n")
 
 if __name__== "__main__":
